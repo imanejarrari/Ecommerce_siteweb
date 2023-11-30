@@ -42,7 +42,7 @@
 
 }
 .navbar li a:hover{
-  color:red;
+  
   font-size:18px;
 }
 
@@ -50,7 +50,7 @@ ul li ul.dropdown li{
   display: block;
   color: black;
   margin-bottom: 15px;
-  margin-top:15 px;
+  
   
   
 
@@ -66,7 +66,7 @@ ul li ul.dropdown{
   display: none;
   color: black;
   width: 150px;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 }
 ul li:hover{
   background-color:black;
@@ -76,11 +76,14 @@ ul li:hover ul.dropdown{
   display: block;
 }
 .dropdown li:hover{
-  background-color: white
+  background-color: 
 }
 ul.dropdown a{
   color:black;
   
+}
+.dropdown ul{
+  border-radius: 4px;
 }
  
 
