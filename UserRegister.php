@@ -20,7 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($check_user_query);
 
     if ($result->num_rows > 0) {
-        echo "Already have an account";
+        echo '<div class="erreur">Already you have an account</div>';
+
     } else {
         // insérer les données dans la base de données
         $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
@@ -47,6 +48,16 @@ $conn->close();
     <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="login.css">
+   <style>
+    .erreur {
+        position: absolute;
+        top:560px;
+        left:730px;
+        color: red;
+        font-weight: bold;
+        text-align: center; /* Pour centrer le message */
+    }
+</style>
 </head>
 <body>
     <form action="UserRegister.php" method="post" class="form-wrapper" >
