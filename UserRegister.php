@@ -43,12 +43,12 @@ $dbname = "ecommerce";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login 03</title>
+    <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <form action="login.php" method="post" class="form-wrapper" >
+    <form action="UserRegister.php" method="post" class="form-wrapper" >
         <div class="form-side">
             <a href="#" title="Logo"><img src="logo.png" class="logo" alt="Kuro"></a>
                 <div class="form-welcome-row">
