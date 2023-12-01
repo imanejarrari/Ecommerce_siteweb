@@ -46,11 +46,12 @@
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="login.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handlee:wght@400&display=swap">
 </head>
 <body>
     <form action="login.php" method="post" class="form-wrapper" >
         <div class="form-side">
-            <a href="#" title="Logo"><img src="logo.png" class="logo" alt="Kuro"></a>
+            <h2>EVARA</h2>
                 <div class="form-welcome-row">
                     <h1>Sign in with :</h1>
                 </div>
@@ -67,7 +68,7 @@
 
           <div class="footer-links">
              <a href="/password-reset" class="password">Forgotten password?</a>
-             <a href="/register" class="login">sign up</a>
+             <a href="UserRegister.php" class="login">sign up</a>
            </div>
          
         </div>

@@ -48,6 +48,7 @@ $conn->close();
     <title>Sign Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="login.css">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Handlee:wght@400&display=swap">
    <style>
     .erreur {
         position: absolute;
@@ -62,7 +63,8 @@ $conn->close();
 <body>
     <form action="UserRegister.php" method="post" class="form-wrapper" >
         <div class="form-side">
-            <a href="#" title="Logo"><img src="logo.png" class="logo" alt="Kuro"></a>
+           <h2>EVARA</h2>
+            
                 <div class="form-welcome-row">
                     <h1>Sign up with :</h1>
                 </div>
