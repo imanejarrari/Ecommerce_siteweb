@@ -17,9 +17,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST["description"];
     $price = $_POST["price"];
     $category = $_POST["category"];
+    $stock = $_POST["stock"];
 
     // Gestion de l'upload de l'image
-    $target_dir = "uploads/";  // Dossier où vous stockez les images
+    $target_dir = "pictures/";  // Dossier où vous stockez les images
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -32,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Autorisez certains formats de fichiers
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-        && $imageFileType != "gif") {
+    $allowed_image_types = ["jpg", "jpeg", "png", "gif"];
+    if (!in_array($imageFileType, $allowed_image_types)) {
         echo "Désolé, seuls les fichiers JPG, JPEG, PNG et GIF sont autorisés.";
         $uploadOk = 0;
     }
@@ -43,16 +44,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Si tout est correct, essayez de télécharger le fichier
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
             // Insérez le produit dans la base de données avec l'image
-            $insert_product_query = "INSERT INTO products (name, description, price, category, image_path) 
-                                     VALUES ('$name', '$description', '$price', '$category', '$target_file')";
+            $insert_product_query = "INSERT INTO products (name, description, price, category, image_path, stock) 
+                                     VALUES ('$name', '$description', '$price', '$category', '$target_file', $stock)";
 
-            if ($conn->query($insert_product_query) === TRUE) {
-                echo "Le produit a été ajouté avec succès.";
-            } else {
-                echo "Erreur d'ajout de produit : " . $conn->error;
-            }
+if ($conn->query($insert_product_query) === TRUE) {
+    echo "";
+} else {
+    echo "<p style='color: red; font-weight: bold;'>Error: </p>Product addition error : " . $conn->error;
+}
+
         } else {
-            echo "Désolé, une erreur s'est produite lors du téléchargement de votre fichier.";
+            echo "Sorry, an error occurred while uploading your file.";
         }
     }
 }
@@ -60,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Fermez la connexion à la base de données
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,10 +72,10 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Sidebar Menu </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-    
+
     <div class="main-container">
         <div class="left-menu">
             <div class="logo">
@@ -92,27 +95,26 @@ $conn->close();
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
                      Sales Statistics </a></li>
-                     <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
+                <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
                 <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i></a>
                 <li>
             </ul>
         </div>
-         
-        
 
-<form action="newProduct.php" method="POST" class="form-wrapper">
+<form action="newProduct.php" method="POST" class="form-wrapper" enctype="multipart/form-data">
     <label for="name">Product Name:</label>
-    <input type="text" name="name" placeholder="Please enter the title of this product" required ><br>
+    <input type="text" name="name" placeholder="Please enter the title of this product" required><br>
 
-    <label for="description">Description:</label>
-    <textarea name="description" placeholder="Please enter the description of this product " required></textarea><br>
+    <label for="description" class="text">Description:</label>
+    <textarea name="description" placeholder="Please enter the description of this product" required></textarea><br>
 
     <label for="price">Price:</label>
-    <input type="number" name="price" step="0.01"placeholder="please enter the price of this product" required><br>
+    <input type="number" name="price" step="0.01" placeholder="Please enter the price of this product" required><br>
 
     <label for="category">Category:</label>
-    <input type="text" name="category" placeholder="please enter the category of this product" required><br>
-
+    <input type="text" name="category" placeholder="Please enter the category of this product" class="category" required><br>
+    <label for="stock">Stock:</label>
+    <input type="number" name="stock" id="stock" placeholder="Please enter the quantity of stock" required><br>
     <label for="image_path">Image Product:</label>
     <input type="file" name="image" accept="image/*" required><br>
 

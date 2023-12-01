@@ -146,40 +146,47 @@ ul li a i {
     display:inline-block;
     justify-content: center;
     align-items: center;
-    height:590px;
+    height:660px;
     position: absolute;
     left:500px;
     top:20px;
-   border:1px solid #041e42 ;
+   border:1px solid #e9ebee ;
+   border-radius:1px;
+   background-color:whitesmoke;
 } 
 label{
-   margin-left:200px;
-   margin-right:200px;
+   margin-left:20px;
    margin-bottom:10px;
    margin-top:20px;
    display:block;
+   color:#041e42;
+   font-family: Tajawal;
 }
 input[type="text"], input[type="number"]{
     width: 300px;
     padding: 10px;
     margin-left:100px;
-    margin-right:100px;
+    margin-right:60px;
     display: inline-block;
     font-size:small;
-    border-style: solid;
+    border-style: solid ;
+    border-color:#041e42 ;
     border-width:1px 1px 1px 1px;
-    border-radius:10px;
+    border-radius:20px;
+    background-color:whitesmoke;
 }
 textarea{
     width: 300px;
     padding: 10px;
     margin-left:100px;
-    margin-right:100px;
+    margin-right:60px;
     display: inline-block;
     font-size:small;
     border-style: solid;
     border-width:1px 1px 1px 1px;
-    border-radius:5px; 
+    border-radius:20px; 
+    border-color:#041e42 ;
+    background-color:whitesmoke;
 }
 input[type="file"]{
     padding: 10px;
@@ -187,6 +194,9 @@ input[type="file"]{
     margin-right:100px;
     display: inline-block;
     font-size: small;
+    background-color:whitesmoke;
+    border: none;
+    border-radius:15px;
 }
 input[type="submit"] {
     display: inline-block;
@@ -194,6 +204,7 @@ input[type="submit"] {
     color: white;
     padding: 14px 20px;
     margin-left:150px ;
+    margin-top: 20px;
     border: none;
     border-radius:15px ;
     cursor: pointer;
