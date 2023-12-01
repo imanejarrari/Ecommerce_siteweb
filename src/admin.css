@@ -7,17 +7,19 @@
 }
 
 .main-container {
+    overflow: auto;
+    position: fixed;
     width: 100%;
-    height: 100vh;
+    height:100vh;
     z-index: 3000;
     background-color: white;
 }
 
 .left-menu {
+    position: fixed;
     width: 13rem;
-    height: 100vh;
+    height:100vh;
     display: flex;
-    position: relative;
     background: #041e42;
     flex-direction: column;
     transition: all .4s ease;
@@ -128,7 +130,7 @@ ul li a i {
 }
 #setting{
     position: absolute;
-    bottom:3rem;
+    bottom:2.5rem;
 }
 .left-menu ul li:hover {
     transform: translateX(.4rem);
@@ -140,4 +142,66 @@ ul li a i {
     font-weight: bold;
     color: purple;
 }  
- 
+.form-wrapper {
+    display:inline-block;
+    justify-content: center;
+    align-items: center;
+    height:590px;
+    position: absolute;
+    left:500px;
+    top:20px;
+   border:1px solid #041e42 ;
+} 
+label{
+   margin-left:200px;
+   margin-right:200px;
+   margin-bottom:10px;
+   margin-top:20px;
+   display:block;
+}
+input[type="text"], input[type="number"]{
+    width: 300px;
+    padding: 10px;
+    margin-left:100px;
+    margin-right:100px;
+    display: inline-block;
+    font-size:small;
+    border-style: solid;
+    border-width:1px 1px 1px 1px;
+    border-radius:10px;
+}
+textarea{
+    width: 300px;
+    padding: 10px;
+    margin-left:100px;
+    margin-right:100px;
+    display: inline-block;
+    font-size:small;
+    border-style: solid;
+    border-width:1px 1px 1px 1px;
+    border-radius:5px; 
+}
+input[type="file"]{
+    padding: 10px;
+    margin-left:100px;
+    margin-right:100px;
+    display: inline-block;
+    font-size: small;
+}
+input[type="submit"] {
+    display: inline-block;
+    background-color:#041e42;
+    color: white;
+    padding: 14px 20px;
+    margin-left:150px ;
+    border: none;
+    border-radius:15px ;
+    cursor: pointer;
+    width: 200px;
+    height:50px;
+    font-size: 18px;
+}
+
+input[type="submit"]:hover {
+    background-color:#041e42;
+}

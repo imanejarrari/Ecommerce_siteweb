@@ -18,11 +18,13 @@
             </div>
             <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
-                <li class="sidebar-item"><a class="sidebar-link" href="Admin.html"><i class="fa-solid fa-house"></i> Dashbord </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-user"></i> Users </a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i> Products</a>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-brands fa-product-hunt" style="color: #ffffff;"></i> All Products</a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>Orders </a>
                 </li>

@@ -1,10 +1,9 @@
 <?php
 // Connexion à la base de données (à personnaliser avec vos propres informations)
-$servername = "votre_serveur_mysql";
-$username = "votre_nom_utilisateur_mysql";
-$password = "votre_mot_de_passe_mysql";
-$dbname = "votre_base_de_donnees";
-
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Vérifiez la connexion à la base de données
@@ -61,3 +60,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // Fermez la connexion à la base de données
 $conn->close();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Sidebar Menu </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    
+    <div class="main-container">
+        <div class="left-menu">
+            <div class="logo">
+                <span class="logoLink"><a href="">EVARA</a></span>
+            </div>
+            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
+            <ul>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-user"></i> Users </a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-brands fa-product-hunt" style="color: #ffffff;"></i> All Products</a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>Orders </a>
+                </li>
+                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
+                     Sales Statistics </a></li>
+                     <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
+                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i></a>
+                <li>
+            </ul>
+        </div>
+         
+        
+
+<form action="newProduct.php" method="POST" class="form-wrapper">
+    <label for="name">Product Name:</label>
+    <input type="text" name="name" placeholder="Please enter the title of this product" required ><br>
+
+    <label for="description">Description:</label>
+    <textarea name="description" placeholder="Please enter the description of this product " required></textarea><br>
+
+    <label for="price">Price:</label>
+    <input type="number" name="price" step="0.01"placeholder="please enter the price of this product" required><br>
+
+    <label for="category">Category:</label>
+    <input type="text" name="category" placeholder="please enter the category of this product" required><br>
+
+    <label for="image_path">Image Product:</label>
+    <input type="file" name="image" accept="image/*" required><br>
+
+    <input type="submit" value="Add Product">
+</form>
+
+</body>
+<script src="admin.js"></script>
+
+</html>

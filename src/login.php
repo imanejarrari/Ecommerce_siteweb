@@ -1,44 +1,51 @@
-<?php 
-   $servername = "127.0.0.1";
-   $username = "root";
-   $password = "";
-   $dbname = "ecommerce";
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
-   $conn = new mysqli($servername, $username, $password, $dbname);
-   if ($conn->connect_error) {
-     die("La connexion a échoué : " . $conn->connect_error);
-   }
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("La connexion a échoué : " . $conn->connect_error);
+}
 
-   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-       $username = $_POST["username"];
-       $password = $_POST["password"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-       // Retrieve the hashed password
-       $get_user_query = "SELECT id, username, password FROM users WHERE username = '$username'";
-       $result = $conn->query($get_user_query);
+    // Retrieve the hashed password and isAdmin value
+    $get_user_query = "SELECT id, username, password, isAdmin FROM users WHERE username = '$username'";
+    $result = $conn->query($get_user_query);
 
-       if ($result->num_rows > 0) {
-           // User found in the database
-           $user = $result->fetch_assoc();
+    if ($result->num_rows > 0) {
+        // User found in the database
+        $user = $result->fetch_assoc();
 
-           // Verify the entered password with the stored hashed password
-           if (password_verify($password, $user["password"])) {
-               session_start();
-               $_SESSION["user_name"] = $user["username"];
-               header("Location: homeafter.php");
-               exit();
-           } else {
-               // Incorrect password, display an error message
-               echo "Wrong password, try again ";
-           }
-       } else {
-           // User not found, display an error message or redirect to registration
-           echo "User not found";
-       }
-   }
+        // Verify the entered password with the stored hashed password
+        if (password_verify($password, $user["password"])) {
+            session_start();
+            $_SESSION["user_name"] = $user["username"];
 
-   $conn->close();
+            // Redirige vers le tableau de bord approprié en fonction du rôle
+            if ($user["isAdmin"]) {
+                header("Location: Admin.php");
+            } else {
+                header("Location: index.php");
+            }
+            exit();
+        } else {
+            // Incorrect password, display an error message
+            echo "Wrong password, try again";
+        }
+    } else {
+        // User not found, display an error message or redirect to registration
+        echo "User not found";
+    }
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
