@@ -7,7 +7,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 
 if ($conn->connect_error) {
-    die("La connexion à la base de données a échoué : " . $conn->connect_error);
+    die("connexion failed : " . $conn->connect_error);
 }
 
 // Recherche par nom
@@ -100,12 +100,13 @@ $result = $conn->query($select_products_query);
             echo "<td>$" . $row["price"] . "</td>";
             echo "<td>" . $row["category"] . "</td>";
             echo "<td>" . $row["stock"] . "</td>";
-            echo "<td><a href='delete_product.php?id=" . $row["id"] . "'><i class='fa-solid fa-trash' style='color: #eb000c;'></i> </td>";
+            echo "<td><a class='delete-product' href='delete.php?id=" . $row["id"] . "'><i class='fa-solid fa-trash' style='color: #eb000c;'></i> </td>";
             echo "<td><a href='edit_product.php?id=" . $row["id"] . "'><i class='fa-solid fa-pen-to-square'></i></a> </td>";
             echo "</tr>";
         }
         ?>
     </table>
+    </script>
 
 </body>
 <script src="admin.js"></script>
