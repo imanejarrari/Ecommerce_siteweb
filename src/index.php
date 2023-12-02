@@ -2,7 +2,7 @@
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
-$dbname = "ecomerce";
+$dbname = "ecommerce";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -25,33 +25,6 @@ if ($result->num_rows > 0) {
 //$conn->close();
 
 ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
