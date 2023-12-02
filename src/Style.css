@@ -211,25 +211,7 @@ ul li:hover ul.dropdown:first-child{
   width: 100%;
   margin-bottom: 10px;
 }
-#product1 .pro{
-  width: 23%;
-  min-width: 250px;
-  padding: 10px 12px;
-  border: 1px solid #cce7d0;
-  border-radius: 25px;
-  cursor: pointer;
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02) ;
-  margin: 15px 0;
-  transition: 0.2s ease;
-}
-#product1 .pro:hover{
-  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.06) ;
-}
 
-#product1 .pro img{
-  width: 100%;
-  border-radius: 20px;
-}
 
 
  .main{
@@ -416,6 +398,109 @@ ul li:hover ul.dropdown:first-child{
   footer .follow i:hover{
     color:#088178
   }
+
+  #up h2,p{
+   text-align: center;
+   
+  }
+  /* container for all the elements */
+.pro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* main box containing the image and text */
+
+.item-container {
+  background-color: #fff;
+  width: 20rem;
+  height: 40rem;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.main-item {
+  
+  display: block;
+  margin: 0 auto;
+}
+.main-item img{
+  width: 250px;
+  height: 300px;
+}
+
+
+.item-heading {
+  text-transform: capitalize;
+  font-size: 16px;
+}
+
+.item-description {
+  margin: .5rem 0;
+  font-size: .9rem;
+  font-weight: 200;
+}
+
+.item-price {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.item-price sup {
+  color: green;
+}
+
+.rating i {
+  color:#041e42;
+  margin-bottom: 1rem;
+}
+
+.item-cart-btn {
+  border: none;
+  background-color: transparent;
+  margin: 0 auto;
+  width: 100%;
+  border: 1px;
+  font-weight: bold;
+  padding: .5rem 1rem;
+  background-color: #041e42;
+  color: #fff;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: 200;
+  position: relative;
+  cursor: pointer;
+  transition: all .3s linear;
+}
+
+.item-cart-btn:hover {
+  color: #fff;
+  background-color: #041e42;
+}
+.pro-container:hover{
+  box-shadow: 20px 30px 20px grey;
+
+}
+#product1 .item-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  
+}
+#product2 .item-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  
+}
+
 
 
 
