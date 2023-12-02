@@ -22,7 +22,7 @@
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-user"></i> Users </a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-brands fa-product-hunt" style="color: #ffffff;"></i> All Products</a>
+                <li class="sidebar-item"><a class="sidebar-link" href="AffichageProduct.php"><i class="fa-brands fa-product-hunt" style="color: #ffffff;"></i> All Products</a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
