@@ -1,16 +1,11 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
+session_start();
+include ("config.php");
+$connected = @$_SESSION["admin_connected"] ; 
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+if(!$connected){
+	header("Location: index.php");
+  }
 
 // Get the product ID from the query parameters
 $id = isset($_GET['id']) ? $_GET['id'] : null;

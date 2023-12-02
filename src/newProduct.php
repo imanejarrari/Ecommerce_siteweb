@@ -1,15 +1,11 @@
 <?php
-// Connexion à la base de données (à personnaliser avec vos propres informations)
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
-$conn = new mysqli($servername, $username, $password, $dbname);
+session_start();
+include ("config.php");
+$connected = @$_SESSION["admin_connected"] ; 
 
-// Vérifiez la connexion à la base de données
-if ($conn->connect_error) {
-    die("La connexion à la base de données a échoué : " . $conn->connect_error);
-}
+if(!$connected){
+	header("Location: index.php");
+  }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérez les données du formulaire, y compris la catégorie

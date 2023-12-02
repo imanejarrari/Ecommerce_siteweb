@@ -1,14 +1,11 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
-$conn = new mysqli($servername, $username, $password, $dbname);
+session_start();
+include ("config.php");
+$connected = @$_SESSION["admin_connected"] ; 
 
-
-if ($conn->connect_error) {
-    die("connexion failed : " . $conn->connect_error);
-}
+if(!$connected){
+	header("Location: index.php");
+  }
 
 // Recherche par nom
 $search_name = isset($_GET['search_name']) ? $_GET['search_name'] : '';
