@@ -1,13 +1,11 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
+session_start();
+include ("config.php");
+$connected = @$_SESSION["admin_connected"] ; 
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("La connexion a échoué : " . $conn->connect_error);
-}
+if(!$connected){
+	header("Location: UserRegister.php");
+  }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];

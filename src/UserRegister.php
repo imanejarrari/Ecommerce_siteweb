@@ -5,7 +5,7 @@ include ("config.php");
 $connected = @$_SESSION["admin_connected"] ; 
 
 if(!$connected){
-	header("Location: index.php");
+	header("Location: UserRegister.php");
   }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
