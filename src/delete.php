@@ -1,11 +1,10 @@
 <?php
-session_start();
-include ("config.php");
-$connected = @$_SESSION["admin_connected"] ; 
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
-if(!$connected){
-	header("Location: index.php");
-  }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Vérifie si l'ID du produit à supprimer est passé en paramètre dans l'URL
 if (isset($_GET['id'])) {

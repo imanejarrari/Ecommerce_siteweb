@@ -1,11 +1,10 @@
 <?php
-session_start();
-include ("config.php");
-$connected = @$_SESSION["admin_connected"] ; 
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
-if(!$connected){
-	header("Location: index.php");
-  }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Recherche par nom
 $search_name = isset($_GET['search_name']) ? $_GET['search_name'] : '';

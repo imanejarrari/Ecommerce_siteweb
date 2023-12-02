@@ -1,11 +1,10 @@
 <?php
-session_start();
-include ("config.php");
-$connected = @$_SESSION["admin_connected"] ; 
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
-if(!$connected){
-	header("Location: UserRegister.php");
-  }
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
