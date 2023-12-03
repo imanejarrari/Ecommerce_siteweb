@@ -1,23 +1,30 @@
-<?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
+<?php 
+  $servername="127.0.0.1";
+  $username="root";
+  $password="";
+  $dbname="ecommerce";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+  $conn=new mysqli($servername,$username,$password,$dbname);
+  
 
-// Recherche par nom
-$search_name = isset($_GET['search_name']) ? $_GET['search_name'] : '';
-$search_category = isset($_GET['search_category']) ? $_GET['search_category'] : '';
+  $search_name = isset($_GET['search_name']) ? $_GET['search_name'] : '';
 
-// Filtrage par catégorie
-$filter_category = isset($_GET['filter_category']) ? $_GET['filter_category'] : '';
+  $sql = 'SELECT * FROM users WHERE IsAdmin = 0 AND username LIKE ?';
+  $stmt = $conn->prepare($sql);
+  
+  // Ajouter le paramètre de recherche à la requête préparée
+  $stmt->bind_param('s', $search_name_param);
+  $search_name_param = '%' . $search_name . '%';
+  
+  // Exécuter la requête préparée
+  $stmt->execute();
+  
+  // Récupérer le résultat de la requête
+  $result = $stmt->get_result();
+  
+  // Fermer la requête préparée
+  $stmt->close();
 
-// Requête pour récupérer les produits
-$select_products_query = "SELECT * FROM products WHERE 
-                         (name LIKE '%$search_name%') AND
-                         ('$filter_category' = '' OR category = '$filter_category')";
-$result = $conn->query($select_products_query);
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +37,35 @@ $result = $conn->query($select_products_query);
     <title>Product Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="affichage.css">
+    <style>
+    table td{
+      height:40px ;
+    }
+    .search{
+      width:1050px;
+      height:40px;
+      padding-left:490px;
+     margin-right:60px;
+     display: inline-block;
+     font-size:small;
+     border-style: solid ;
+    border-color:#041e42 ;
+    border-width:1px 1px 1px 1px;
+    
+    }
+
+    </style>
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector(".search");
+
+            // Ajoutez un écouteur d'événements pour détecter les changements dans le champ de recherche
+            searchInput.addEventListener("input", function () {
+                // Soumettez automatiquement le formulaire lorsqu'il y a un changement
+                this.form.submit();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -38,7 +74,7 @@ $result = $conn->query($select_products_query);
             <div class="logo">
                 <span class="logoLink"><a href="">EVARA</a></span>
             </div>
-            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i> </li>
+            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
@@ -60,44 +96,25 @@ $result = $conn->query($select_products_query);
 
     <form action="" method="GET" class="form">
        
-
-        <label for="filter_category">Filter by Category:</label>
-        <select name="filter_category" class="filtrer">
-            <option value="">All Categories</option>
-            <option value="clothes" <?php echo ($filter_category == 'clothes') ? 'selected' : ''; ?>>clothes</option>
-            <option value="bags" <?php echo ($filter_category == 'bags') ? 'selected' : ''; ?>>bags</option>
-            <option value="accessories" <?php echo ($filter_category == 'accessories') ? 'selected' : ''; ?>>accessories</option>
-            <option value="shoes" <?php echo ($filter_category == 'shoes') ? 'selected' : ''; ?>>shoes</option>
-        </select>
-
-        <input type="submit" value="Filter">
          <label for="search_name"></label>
         <input type="text" name="search_name" class="search" placeholder="Search by Name:" value="<?php echo $search_name; ?>">
-        <input type="submit" value="Search">
     </form>
 
     <table border="1" class="tab">
         <tr>
-            <th>Image</th>
+            <th>id</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Category</th>
-            <th>Quantity</th>
-            <th>Delete</th>
-            <th>Edit</th>
+            <th>E-mail</th>
+            <th>Registration date</th>
         </tr>
         <?php
         // Affichez chaque produit dans le tableau
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
-            echo "<td><img src='" . $row["image_path"] . "' alt='" . $row["name"] . "' width='50' height='50'></td>";
-
-            echo "<td>" . $row["name"] . "</td>";
-            echo "<td>$" . $row["price"] . "</td>";
-            echo "<td>" . $row["category"] . "</td>";
-            echo "<td>" . $row["stock"] . "</td>";
-            echo "<td><a class='delete-product' href='delete.php?id=" . $row["id"] . "'><i class='fa-solid fa-trash' style='color: #eb000c;'></i> </td>";
-            echo "<td><a href='edit_product.php?id=" . $row["id"] . "'><i class='fa-solid fa-pen-to-square'></i></a> </td>";
+            echo "<td>" . $row["id"] . "</td>";
+            echo "<td>" . $row["username"] . "</td>";
+            echo "<td>" . $row["email"] . "</td>";
+            echo "<td>" . $row["registration_date"] . "</td>";
             echo "</tr>";
         }
         ?>
