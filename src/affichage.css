@@ -155,6 +155,7 @@ ul li a i {
   height:50px;
   color: white;
   background-color:#041e42 ;
+  
 }
 .tab td{
     border: 0.5px solid  #041e42;
@@ -204,4 +205,23 @@ input[type="submit"]:hover {
     border-radius:10px;
     color: #041e42;
     padding-left:100px;
+}
+.completed-status {
+    background-color: #FFCCCC; /* Light red background for Completed status */
+    color: #000000; /* Black text for better visibility */
+}
+
+.delivering-status {
+    background-color: #FFFFCC; /* Light yellow background for Delivering status */
+    color: #000000; /* Black text for better visibility */
+}
+
+.cancelled-status {
+    background-color: #FF9999; /* Light red background for Cancelled status */
+    color: #000000; /* Black text for better visibility */
+}
+section{
+   margin-left:300px;
+
+
 }
