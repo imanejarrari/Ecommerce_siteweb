@@ -86,7 +86,7 @@ $conn->close();
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
                      Sales Statistics </a></li>

@@ -48,7 +48,7 @@ $result = $conn->query($select_products_query);
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i> All Orders </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i> All Orders </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
                      Sales Statistics </a></li>
@@ -97,7 +97,8 @@ $result = $conn->query($select_products_query);
             echo "<td>" . $row["category"] . "</td>";
             echo "<td>" . $row["stock"] . "</td>";
             echo "<td><a class='delete-product' href='delete.php?id=" . $row["id"] . "'><i class='fa-solid fa-trash' style='color: #eb000c;'></i> </td>";
-            echo "<td><a href='Edit.php?id=" . $row["id"] . "'><i class='fa-solid fa-pen-to-square'></i></a> </td>";
+            echo "<td><a href='Edit.php' onclick='openForm(" . $row["id"] . ")'><i class='fa-solid fa-pen-to-square'></i></a> </td>";
+
             echo "</tr>";
         }
         ?>

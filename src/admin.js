@@ -14,3 +14,34 @@ btn.addEventListener('click', function () {
         logo.style.opacity = '1';
     }
 })
+
+    var popups = document.getElementsByClassName('form-popup');
+
+    // Loop through all found elements and hide them
+    for (var i = 0; i < popups.length; i++) {
+        popups[i].style.display = 'none';
+    }
+
+    function openForm(formId) {
+        // Construct the form id based on the product id or any unique identifier
+        document.getElementById(formId).style.display = "block";
+
+        let selectMenu = document.querySelector("#status_select_" + formId);
+        selectMenu.addEventListener("change", function () {
+            let categoryName = this.value;
+            console.log(categoryName);
+            console.log(formId);
+
+            let http = new XMLHttpRequest();
+
+            http.open('POST', "AffichageProduct.php", true);
+            http.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            http.send("category=" + categoryName + "&id=" + formId);
+            location.reload();
+        });
+    }
+
+    function closeForm(formId) {
+        document.getElementById(formId).style.display = "none";
+    }
+
