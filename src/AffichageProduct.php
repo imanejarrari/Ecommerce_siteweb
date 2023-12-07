@@ -97,7 +97,7 @@ $result = $conn->query($select_products_query);
             echo "<td>" . $row["category"] . "</td>";
             echo "<td>" . $row["stock"] . "</td>";
             echo "<td><a class='delete-product' href='delete.php?id=" . $row["id"] . "'><i class='fa-solid fa-trash' style='color: #eb000c;'></i> </td>";
-            echo "<td><a href='Edit.php' onclick='openForm(" . $row["id"] . ")'><i class='fa-solid fa-pen-to-square'></i></a> </td>";
+            echo "<td><a href='Edit.php'  " . $row["id"] . "><i class='fa-solid fa-pen-to-square'></i></a> </td>";
 
             echo "</tr>";
         }

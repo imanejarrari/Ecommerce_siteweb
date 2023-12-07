@@ -1,15 +1,17 @@
-<?php 
-
+<?php
+// Database Connection
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "ecommerce";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-function executeSingleValueQuery($sql) {
-    global $conn; // Assuming $conn is your database connection object
-
+// Function to execute single value query
+function executeSingleValueQuery($conn, $sql) {
     $result = $conn->query($sql);
 
     if ($result) {
@@ -25,22 +27,8 @@ function executeSingleValueQuery($sql) {
     }
 }
 
-// Fetching statistics for different order statuses
-$pendingOrdersCount = executeSingleValueQuery("SELECT COUNT(*) FROM orders WHERE status='Pending'");
-$pendingOrdersPercentage = executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Pending' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders");
-
-$deliveringOrdersCount = executeSingleValueQuery("SELECT COUNT(*) FROM orders WHERE status='Delivering'");
-$deliveringOrdersPercentage = executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Delivering' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders");
-
-$completedOrdersCount = executeSingleValueQuery("SELECT COUNT(*) FROM orders WHERE status='Completed'");
-$completedOrdersPercentage = executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Completed' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders");
-
-$cancelledOrdersCount = executeSingleValueQuery("SELECT COUNT(*) FROM orders WHERE status='Cancelled'");
-$cancelledOrdersPercentage = executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Cancelled' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders");
-
-function getAllCommandes() {
-    global $conn;
-
+// Function to get all orders
+function getAllCommandes($conn) {
     $sql = "SELECT * FROM orders";
     $result = $conn->query($sql);
 
@@ -48,15 +36,44 @@ function getAllCommandes() {
         $cmd = $result->fetch_all(MYSQLI_ASSOC);
         return $cmd;
     } else {
-        return 0;
+        return [];
     }
 }
 
-$cmd = getAllCommandes();
+// Function to count the total number of orders
+function countTotalOrders($conn) {
+    $sql = "SELECT COUNT(*) FROM orders";
+    return executeSingleValueQuery($conn, $sql);
+}
+
+// Function to count the number of delivered orders
+function countDeliveredOrders($conn) {
+    $sql = "SELECT COUNT(*)  FROM orders WHERE status = 'Delivering'";
+    return executeSingleValueQuery($conn, $sql);
+}
+
+// Function to count the number of cancelled orders
+function countCancelledOrders($conn) {
+    $sql = "SELECT COUNT(*)  FROM orders WHERE status = 'Cancelled'";
+    return executeSingleValueQuery($conn, $sql);
+}
+
+// Function to count the number of completed orders
+function countCompletedOrders($conn) {
+    $sql = "SELECT COUNT(*) FROM orders WHERE status = 'Completed'";
+    return executeSingleValueQuery($conn, $sql);
+}
+
+// Fetching statistics for different order statuses
+$deliveringOrdersCount = countDeliveredOrders($conn);
+$completedOrdersCount = countCompletedOrders($conn);
+$cancelledOrdersCount = countCancelledOrders($conn);
+$totalOrdersCount = countTotalOrders($conn);
+
+// Get all orders
+$cmd = getAllCommandes($conn);
 $todaysDate = date("Y-m-d");
-
 ?>
-
 
 
 
@@ -91,8 +108,8 @@ $todaysDate = date("Y-m-d");
         h3 {
             margin-bottom: 10px;
         }
-        p {
-            margin: 0;
+       .card  p {
+            margin:10px;
         }
         .tab td{
             border: 1px solid #041e42;
@@ -100,6 +117,38 @@ $todaysDate = date("Y-m-d");
             text-align: center;
             color: #041e42;
         }
+        .completed-status {
+    background-color:greenyellow; /* Light red background for Completed status */
+    color: #000000; /* Black text for better visibility */
+            padding: 20px;
+            border-radius: 5px;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.delivering-status {
+    background-color: #FFFFCC; /* Light yellow background for Delivering status */
+    color: #000000; /* Black text for better visibility */
+            padding: 20px;
+            border-radius: 5px;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cancelled-status {
+    background-color: #FF9999; /* Light red background for Cancelled status */
+    color: #000000; /* Black text for better visibility */
+
+            padding: 20px;
+            border-radius: 5px;
+            width: 200px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+section{
+   margin-left:300px;
+
+
+}
     </style>
 
 
@@ -128,32 +177,25 @@ $todaysDate = date("Y-m-d");
                 <li>
             </ul>
         </div>
-
-
-
-
-
-
         <section>
-         <div class="card">
-                <h3>Pending Orders</h3>
-                <p class=""><?php echo $pendingOrdersCount; ?> orders : <?php echo $pendingOrdersPercentage; ?>%</p>
-         </div>
-         <div class="card">
-                <h3>Completed Orders</h3>
-                <p class="completed-status"><?php echo $completedOrdersCount; ?> orders : <?php echo $completedOrdersPercentage; ?>%</p>
-         </div>
-         <div class="card">
-                <h3>Delivering Orders</h3>
-                <p class="delivering-status"><?php echo $deliveringOrdersCount; ?> orders : <?php echo $deliveringOrdersPercentage; ?>%</p>
-         </div>
-         <div class="card">
-                <h3>Cancelled Orders</h3>
-                <p class="cancelled-status"><?php echo $cancelledOrdersCount ; ?> orders : <?php echo $cancelledOrdersPercentage; ?>%</p>
-         </div>
+    <div class="card">
+        <h3>All Orders</h3>
+        <p><?php echo $totalOrdersCount; ?> orders</p>
+    </div>
+    <div class="completed-status">
+        <h3>Completed Orders</h3>
+        <p><?php echo $completedOrdersCount; ?> orders</p>
+    </div>
+    <div class="delivering-status">
+        <h3>Delivering Orders</h3>
+        <p><?php echo $deliveringOrdersCount; ?> orders</p>
+    </div>
+    <div class="cancelled-status">
+        <h3>Cancelled Orders</h3>
+        <p><?php echo $cancelledOrdersCount; ?> orders</p>
+    </div>
+</section>
 
-
-        </section>
         <br>
         <table border="1" class="tab">
              <th>Command Number</th>
@@ -163,8 +205,10 @@ $todaysDate = date("Y-m-d");
              <th>Order date</th>
              <th>Date of the delivery</th>
              <th>Status</th>
+             <th>Edit</th>
        -
        <?php
+       
                  foreach ($cmd as $command) {
                     $rowClass = '';
                     switch ($command['status']) {
@@ -190,6 +234,7 @@ $todaysDate = date("Y-m-d");
                     echo '<td>' . $command['order_date'] . '</td>';
                     echo '<td>' . $command['delivery_date'] . '</td>';
                     echo '<td>' . $command['status'] . '</td>';
+                    echo "<td><a href='editStatus.php'  " . $command["id"] . "><i class='fa-solid fa-pen-to-square'></i></a> </td>";
                     echo '</tr>';
                 }
                 ?>
