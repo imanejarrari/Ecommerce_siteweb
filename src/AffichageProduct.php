@@ -79,7 +79,6 @@ $result = $conn->query($select_products_query);
     <table border="1" class="tab">
         <tr>
             <th>Image</th>
-            <th>Id</th>
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
