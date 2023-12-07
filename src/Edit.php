@@ -6,46 +6,41 @@ $dbname = "ecommerce";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-$id = isset($_GET["id"]) ? (int)$_GET["id"] : null;
+$id = $_GET["id"];
+$query = "SELECT * FROM products WHERE id = ? LIMIT 1";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+$article = $result->fetch_assoc();
+  $stmt->close();
 
-if ($id !== null && is_int($id)) {
-    $query = "SELECT * FROM products WHERE id = ? LIMIT 1";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result && $result->num_rows > 0) {
-        $article = $result->fetch_assoc();
-
+if(! $article){
+ header("Location:mesproduits.php");
+}
         if (isset($_POST["submit"])) {
             $nom = $_POST["name"];
             $desc = $_POST["description"];
             $price = $_POST['price'];
             $category = $_POST['category'];
             $stock = $_POST['stock'];
-            
-            $updateQuery = "UPDATE products SET name=?, description=?, price=?, category=?, stock=? WHERE id=?";
-            $updateStmt = $conn->prepare($updateQuery);
-            $updateStmt->bind_param("ssdsii", $nom, $desc, $price, $category, $stock, $id);
-            
-            if ($updateStmt->execute()) {
+            $id = $_GET["id"];
+            $sql = "UPDATE products SET name=?, description=?, price=?, category=?, stock=? WHERE id=?";
+            $stmt = $db_con->prepare($sql);
+            $stmt->bind_param("ssdsii", $nom, $desc, $price, $category, $stock, $id);
+            if ($stmt->execute()) {
                 echo "<script>alert('Article a été bien modifié !');</script>";
-                header("Location: AffichageProduct.php");
+                header("Location:AffichageProduct.php");
+        
             } else {
-                echo "Error updating product: " . $conn->error;
+                echo "Error: " . $db_con->error;
             }
-            
-            $updateStmt->close();
-        }
-    } else {
-        echo "Product not found for ID: $id";
-    }
+            $stmt->close();
+            $db_con->close();
 
-    $stmt->close();
-} else {
-    echo "Product ID is missing or invalid. ID: $id";
-}
+        }
+            
+            
 
 ?>
 
@@ -60,7 +55,7 @@ if ($id !== null && is_int($id)) {
 
 <?php if (isset($article)) : ?>
 
-    <form method="POST" action="Edit.php">
+    <form method="POST" enctype="multipart/form-data" action="">
         <input type="hidden" name="id" value="<?php echo $article['id']; ?>">
         <label for="name">Name:</label>
         <input type="text" name="name" value="<?php echo $article['name']; ?>" required>
