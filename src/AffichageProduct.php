@@ -79,6 +79,7 @@ $result = $conn->query($select_products_query);
     <table border="1" class="tab">
         <tr>
             <th>Image</th>
+            <th>Id</th>
             <th>Name</th>
             <th>Price</th>
             <th>Category</th>
@@ -88,10 +89,9 @@ $result = $conn->query($select_products_query);
         </tr>
         <?php
         // Affichez chaque produit dans le tableau
-        while ($row = $result->fetch_assoc()) {
+          while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td><img src='" . $row["image_path"] . "' alt='" . $row["name"] . "' width='50' height='50'></td>";
-
             echo "<td>" . $row["name"] . "</td>";
             echo "<td>$" . $row["price"] . "</td>";
             echo "<td>" . $row["category"] . "</td>";

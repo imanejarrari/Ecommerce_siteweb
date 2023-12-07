@@ -6,30 +6,47 @@ $dbname = "ecommerce";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Handle product update
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $description = $_POST['description'];
-    $price = $_POST['price'];
-    $category = $_POST['category'];
-    $stock = $_POST['stock'];
+$id = isset($_GET["id"]) ? (int)$_GET["id"] : null;
 
-    $stmt = $conn->prepare("UPDATE products SET name=?, description=?, price=?, category=?, stock=? WHERE id=?");
-    $stmt->bind_param("ssdsii", $name, $description, $price, $category, $stock, $id);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Fetch product details for display
-if (isset($_GET['id'])) {
-    $stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
-    $stmt->bind_param("i", $_GET['id']);
+if ($id !== null && is_int($id)) {
+    $query = "SELECT * FROM products WHERE id = ? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-    $product = $result->fetch_assoc();
+
+    if ($result && $result->num_rows > 0) {
+        $article = $result->fetch_assoc();
+
+        if (isset($_POST["submit"])) {
+            $nom = $_POST["name"];
+            $desc = $_POST["description"];
+            $price = $_POST['price'];
+            $category = $_POST['category'];
+            $stock = $_POST['stock'];
+            
+            $updateQuery = "UPDATE products SET name=?, description=?, price=?, category=?, stock=? WHERE id=?";
+            $updateStmt = $conn->prepare($updateQuery);
+            $updateStmt->bind_param("ssdsii", $nom, $desc, $price, $category, $stock, $id);
+            
+            if ($updateStmt->execute()) {
+                echo "<script>alert('Article a été bien modifié !');</script>";
+                header("Location: AffichageProduct.php");
+            } else {
+                echo "Error updating product: " . $conn->error;
+            }
+            
+            $updateStmt->close();
+        }
+    } else {
+        echo "Product not found for ID: $id";
+    }
+
     $stmt->close();
+} else {
+    echo "Product ID is missing or invalid. ID: $id";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,26 +58,29 @@ if (isset($_GET['id'])) {
 </head>
 <body>
 
-<form method="POST" action="AffichageProduct.php">
-    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-    
-    <label for="name">Name:</label>
-    <input type="text" name="name" value="<?php echo $product['name']; ?>" required>
-    
-    <label for="description">Description:</label>
-    <textarea name="description" required><?php echo $product['description']; ?></textarea>
-    
-    <label for="price">Price:</label>
-    <input type="number" name="price" value="<?php echo $product['price']; ?>" required>
-    
-    <label for="category">Category:</label>
-    <input type="text" name="category" value="<?php echo $product['category']; ?>" required>
-    
-    <label for="stock">Stock:</label>
-    <input type="number" name="stock" value="<?php echo $product['stock']; ?>" required>
-    
-    <button type="submit">Update Product</button>
-</form>
+<?php if (isset($article)) : ?>
+
+    <form method="POST" action="Edit.php">
+        <input type="hidden" name="id" value="<?php echo $article['id']; ?>">
+        <label for="name">Name:</label>
+        <input type="text" name="name" value="<?php echo $article['name']; ?>" required>
+        
+        <label for="description">Description:</label>
+        <textarea name="description" required><?php echo $article['description']; ?></textarea>
+        
+        <label for="price">Price:</label>
+        <input type="number" name="price" value="<?php echo $article['price']; ?>" required>
+        
+        <label for="category">Category:</label>
+        <input type="text" name="category" value="<?php echo $article['category']; ?>" required>
+        
+        <label for="stock">Stock:</label>
+        <input type="number" name="stock" value="<?php echo $article['stock']; ?>" required>
+        
+        <button type="submit" name="submit">Update Product</button>
+    </form>
+
+<?php endif; ?>
 
 </body>
 </html>
