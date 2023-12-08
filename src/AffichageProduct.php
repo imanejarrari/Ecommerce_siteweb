@@ -38,7 +38,7 @@ $result = $conn->query($select_products_query);
             <div class="logo">
                 <span class="logoLink"><a href="">EVARA</a></span>
             </div>
-            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i> </li>
+            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
@@ -48,15 +48,12 @@ $result = $conn->query($select_products_query);
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i> All Orders </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
-                     Sales Statistics </a></li>
-                     <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
-                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i></a>
-                <li>
+                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i>Settings </a>           </li>
             </ul>
         </div>
+    
 
     <form action="" method="GET" class="form">
        

@@ -4,9 +4,8 @@
         $newStatus = $_POST["newStatus"];
         $orderId = $_POST["orderId"];
 
-        // Your database connection and update logic here...
 
-        // Example: Update the order status in the database
+        
         $servername = "127.0.0.1";
         $username = "root";
         $password = "";

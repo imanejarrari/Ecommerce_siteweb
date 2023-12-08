@@ -303,7 +303,7 @@ input[type="submit"]:hover {
     </style>
 </head>
 <body>
-    <div class="main-container">
+<div class="main-container">
         <div class="left-menu">
             <div class="logo">
                 <span class="logoLink"><a href="">EVARA</a></span>
@@ -312,7 +312,7 @@ input[type="submit"]:hover {
             <ul>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-user"></i>All Users </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="user.php"><i class="fa-solid fa-user"></i>All Users </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="AffichageProduct.php"><i class="fa-brands fa-product-hunt" style="color: #ffffff;"></i> All Products</a>
                 </li>
@@ -320,13 +320,10 @@ input[type="submit"]:hover {
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
-                     Sales Statistics </a></li>
-                <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
-                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i></a>
-                <li>
+                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i>Settings </a>           </li>
             </ul>
         </div>
+    
 
 <?php if (isset($article)) : ?>
 
