@@ -141,78 +141,132 @@ ul li a i {
 .left-menu ul li:hover a {
     font-weight: bold;
     color: purple;
-}  
+}
 .form-wrapper {
     display:inline-block;
     justify-content: center;
     align-items: center;
-    height:660px;
+    height:580px;
     position: absolute;
     left:500px;
     top:20px;
    border:1px solid #e9ebee ;
-   border-radius:1px;
+   border-radius:30px;
    background-color:whitesmoke;
 } 
-label{
-   margin-left:20px;
-   margin-bottom:10px;
-   margin-top:20px;
-   display:block;
-   color:#041e42;
-   font-family: Tajawal;
+.form-wrapper h2{
+    margin-left:160px;
+    margin-top:10px;
+    margin-bottom:30px;
+    font-family: 'Lucida Sans';
+    color: #041e42;
 }
-input[type="text"], input[type="number"]{
-    width: 300px;
-    padding: 10px;
-    margin-left:100px;
-    margin-right:60px;
-    display: inline-block;
-    font-size:small;
-    border-style: solid ;
-    border-color:#041e42 ;
-    border-width:1px 1px 1px 1px;
+ input[type=file],input{
+    display:flex;
+    margin-bottom:20px;
+    margin-left:110px;
+    margin-right:100px;
+    width:300px;
+    height:35px;
+    padding-left:40px;
+    border:0.5px solid black;
     border-radius:20px;
-    background-color:whitesmoke;
+    
 }
 textarea{
-    width: 300px;
-    padding: 10px;
-    margin-left:100px;
-    margin-right:60px;
-    display: inline-block;
-    font-size:small;
-    border-style: solid;
-    border-width:1px 1px 1px 1px;
-    border-radius:20px; 
-    border-color:#041e42 ;
-    background-color:whitesmoke;
-}
-input[type="file"]{
-    padding: 10px;
-    margin-left:100px;
+    display:flex;
+    margin-bottom:30px;
+    margin-left:110px;
     margin-right:100px;
-    display: inline-block;
-    font-size: small;
-    background-color:whitesmoke;
-    border: none;
-    border-radius:15px;
+    width:300px;
+    height:40px;
+    padding-top:5px;
+    padding-right:50px;
+    padding-left:50px;
+    border-radius:20px;
+    overflow: hidden;
+}
+.name{
+    position: absolute;
+    top:80px;
+    left:10px;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+
+}
+.des{
+    position: absolute;
+    top:155px;
+    left:10px;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+}
+.price{
+    position: absolute;
+    top:240px;
+    left:10px;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+}
+.category{
+    position: absolute;
+    top:310px;
+    left:10px;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+}   
+.stock{
+    position: absolute;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+    top:390px;
+    left:10px;
+}
+.pic{
+    position: absolute;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+    bottom:20px;
+    left:10px;
+
+
+}
+input[type=file]{
+    padding-left:30px;
+    padding-top:5px;
 }
 input[type="submit"] {
-    display: inline-block;
-    background-color:#041e42;
-    color: white;
-    padding: 14px 20px;
-    margin-left:150px ;
-    margin-top: 20px;
-    border: none;
-    border-radius:15px ;
-    cursor: pointer;
-    width: 200px;
-    height:50px;
-    font-size: 18px;
+display: inline-block;
+border:1px solid whitesmoke;
+padding-left:10px;
+width:200px;
+height:40px;
+margin-left:150px;
+margin-right:150px;
+color:white;
+background-color: #041e42;
+cursor: pointer;
+
 }
 
 input[type="submit"]:hover {
-    background-color:#041e42;
+background-color: rgb(200, 201, 201);
+color: black;
+
 }
+.pic{
+ 
+    position: absolute;
+    color: #041e42;
+    font-size:small;
+    font-family: 'Lucida Sans';
+    top:500px;
+    left:10px;
+
+}  

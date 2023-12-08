@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                      VALUES ('$name', '$description', '$price', '$category', '$target_file', $stock)";
 
 if ($conn->query($insert_product_query) === TRUE) {
-    echo "";
+    header("Location:AffichageProduct.php");
 } else {
-    echo "<p style='color: red; font-weight: bold;'>Error: </p>Product addition error : " . $conn->error;
+    echo "<p style='color: red; font-weight: bold;'>Error: </p> Product addition error : " . $conn->error;
 }
 
         } else {
@@ -68,9 +68,9 @@ $conn->close();
     <title> Sidebar Menu </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="admin.css">
+    
 </head>
 <body>
-
     <div class="main-container">
         <div class="left-menu">
             <div class="logo">
@@ -97,26 +97,27 @@ $conn->close();
         </div>
 
 <form action="newProduct.php" method="POST" class="form-wrapper" enctype="multipart/form-data">
-    <label for="name">Product Name:</label>
+    <h2>Add Product</h2>
+    <label for="name" class="name">Product Name:</label>
     <input type="text" name="name" placeholder="Please enter the title of this product" required><br>
 
-    <label for="description" class="text">Description:</label>
+    <label for="description" class="des">Description:</label>
     <textarea name="description" placeholder="Please enter the description of this product" required></textarea><br>
 
-    <label for="price">Price:</label>
+    <label for="price" class="price">Price:</label>
     <input type="number" name="price" step="0.01" placeholder="Please enter the price of this product" required><br>
 
-    <label for="category">Category:</label>
-    <input type="text" name="category" placeholder="Please enter the category of this product" class="category" required><br>
-    <label for="stock">Stock:</label>
+    <label for="category" class="category">Category:</label>
+    <input type="text" name="category" placeholder="Please enter the category of this product" required><br>
+    <label for="stock" class="stock">Stock:</label>
     <input type="number" name="stock" id="stock" placeholder="Please enter the quantity of stock" required><br>
-    <label for="image_path">Image Product:</label>
-    <input type="file" name="image" accept="image/*" required><br>
+    <label for="image_path" class="pic">Image Product:</label>
+    <input type="file" name="image" accept="image/*"  required><br>
 
     <input type="submit" value="Add Product">
 </form>
 
 </body>
-<script src="admin.js"></script>
+<script src="admin.js"> </script>
 
 </html>

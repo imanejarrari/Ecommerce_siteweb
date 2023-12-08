@@ -1,90 +1,69 @@
 <?php
-// Database Connection
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "ecommerce";
 
+// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+$sqlCount = "SELECT 
+    COUNT(*) AS total_orders,
+    SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS completed_orders,
+    SUM(CASE WHEN status = 'cancelled' THEN 1 ELSE 0 END) AS cancelled_orders,
+    SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) AS pending_orders
+FROM orders";
 
-// Function to execute single value query
-function executeSingleValueQuery($conn, $sql) {
-    $result = $conn->query($sql);
+$result = $conn->query($sqlCount);
 
-    if ($result) {
-        $row = $result->fetch_assoc();
-
-        if ($row !== null && isset($row[0])) {
-            return $row[0];
-        } else {
-            return 0; // Return 0 if no result or an error occurred
-        }
-    } else {
-        return 0; // Return 0 if an error occurred during the query execution
-    }
+if ($result !== false) {
+    $row = $result->fetch_assoc();
+    $totalOrders = $row['total_orders'];
+    $completedOrders = $row['completed_orders'];
+    $cancelledOrders = $row['cancelled_orders'];
+    $pendingOrders = $row['pending_orders'];
+} else {
+    echo "Error: " . $sqlCount . "<br>" . $conn->error;
 }
 
-// Function to get all orders
-function getAllCommandes($conn) {
+
+// Fetch all orders
+
+function getAllOrders($conn) {
     $sql = "SELECT * FROM orders";
     $result = $conn->query($sql);
+    $orders = array();
 
-    if ($result->num_rows > 0) {
-        $cmd = $result->fetch_all(MYSQLI_ASSOC);
-        return $cmd;
-    } else {
-        return [];
+    if ($result !== false) {
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
     }
+
+    return $orders;
 }
 
-// Function to count the total number of orders
-function countTotalOrders($conn) {
-    $sql = "SELECT COUNT(*) FROM orders";
-    return executeSingleValueQuery($conn, $sql);
-}
+$allOrders = getAllOrders($conn);
 
-// Function to count the number of delivered orders
-function countDeliveredOrders($conn) {
-    $sql = "SELECT COUNT(*)  FROM orders WHERE status = 'Delivering'";
-    return executeSingleValueQuery($conn, $sql);
-}
-
-// Function to count the number of cancelled orders
-function countCancelledOrders($conn) {
-    $sql = "SELECT COUNT(*)  FROM orders WHERE status = 'Cancelled'";
-    return executeSingleValueQuery($conn, $sql);
-}
-
-// Function to count the number of completed orders
-function countCompletedOrders($conn) {
-    $sql = "SELECT COUNT(*) FROM orders WHERE status = 'Completed'";
-    return executeSingleValueQuery($conn, $sql);
-}
-
-// Fetching statistics for different order statuses
-$deliveringOrdersCount = countDeliveredOrders($conn);
-$completedOrdersCount = countCompletedOrders($conn);
-$cancelledOrdersCount = countCancelledOrders($conn);
-$totalOrdersCount = countTotalOrders($conn);
-
-// Get all orders
-$cmd = getAllCommandes($conn);
-$todaysDate = date("Y-m-d");
+// Close the database connection
+$conn->close();
 ?>
-
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All orders</title>
+    <title> Sidebar Menu </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="affichage.css">
+    <link rel="stylesheet" href="Affichage.css">
     <style>
     section {
             display: flex;
@@ -126,7 +105,7 @@ $todaysDate = date("Y-m-d");
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.delivering-status {
+.pending-status {
     background-color: #FFFFCC; /* Light yellow background for Delivering status */
     color: #000000; /* Black text for better visibility */
             padding: 20px;
@@ -149,17 +128,23 @@ section{
 
 
 }
+a{
+    text-decoration: none;
+    color: #041e42;
+
+}
     </style>
 
-
 </head>
+
 <body>
-<div class="main-container">
+
+    <div class="main-container">
         <div class="left-menu">
             <div class="logo">
                 <span class="logoLink"><a href="">EVARA</a></span>
             </div>
-            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i> </li>
+            <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
@@ -169,79 +154,75 @@ section{
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="newProduct.php"><i class="fa-solid fa-shirt" style="color: #fcfcfc;"></i>New product</a>
                 </li>
-                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i> All Orders </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i>
-                     Sales Statistics </a></li>
+                        Sales Statistics </a></li>
+                <li class="sidebar-item" id="setting"><a href="#" id="setting" class="sidebar-link"><i class="fa-regular fa-circle-user" style="color: #ffffff;"></i></a></li>
                 <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i></a>
                 <li>
             </ul>
         </div>
+
         <section>
-    <div class="card">
-        <h3>All Orders</h3>
-        <p><?php echo $totalOrdersCount; ?> orders</p>
-    </div>
-    <div class="completed-status">
-        <h3>Completed Orders</h3>
-        <p><?php echo $completedOrdersCount; ?> orders</p>
-    </div>
-    <div class="delivering-status">
-        <h3>Delivering Orders</h3>
-        <p><?php echo $deliveringOrdersCount; ?> orders</p>
-    </div>
-    <div class="cancelled-status">
-        <h3>Cancelled Orders</h3>
-        <p><?php echo $cancelledOrdersCount; ?> orders</p>
-    </div>
-</section>
+            <div class="card">
+                <h3>All Orders</h3>
+                <?php echo "Total Orders: " . $totalOrders . ""; ?>
+            </div>
+            <div class="completed-status">
+                <h3>Completed Orders</h3>
+                <?php echo "Completed Orders: " . $completedOrders . ""; ?>
+            </div>
+            <div class="cancelled-status">
+                <h3>Cancelled Orders</h3>
+                <?php echo "Cancelled Orders: " . $cancelledOrders . ""; ?>
+            </div>
+            <div class="pending-status">
+                <h3>Pending Orders</h3>
+                <?php echo "Pending Orders: " . $pendingOrders . ""; ?>
+            </div>
+        </section>
 
-        <br>
         <table border="1" class="tab">
-             <th>Command Number</th>
-             <th>User's Id</th>
-             <th>User's name</th>
-             <th>Total amont</th>
-             <th>Order date</th>
-             <th>Date of the delivery</th>
-             <th>Status</th>
-             <th>Edit</th>
-       -
-       <?php
-       
-                 foreach ($cmd as $command) {
-                    $rowClass = '';
-                    switch ($command['status']) {
-                        case 'Completed':
-                            $rowClass = 'completed-status';
-                            break;
-                        case 'Delivering':
-                            $rowClass = 'delivering-status';
-                            break;
-                        case 'Cancelled':
-                            $rowClass = 'cancelled-status';
-                            break;
-                        default:
-                            $rowClass = 'incomplete-status';
-                            break;
-                    }
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product ID</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Address</th>
+                    <th>Postal Code</th>
+                    <th>Phone Number</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                    <th>Date of Delivering</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($allOrders as $order) : ?>
+                    <tr>
+                        <td><?php echo $order['command_id']; ?></td>
+                        <td><?php echo $order['product_id']; ?></td>
+                        <td><?php echo $order['user_id']; ?></td>
+                        <td><?php echo $order['username']; ?></td>
+                        <td><?php echo $order['adresse']; ?></td>
+                        <td><?php echo $order['code_postal']; ?></td>
+                        <td><?php echo $order['number_phone']; ?></td>
+                        <td><?php echo $order['quantity']; ?></td>
+                        <td><?php echo $order['total_amount']; ?></td>
+                        <td><?php echo $order['date_of_delivering']; ?></td>
+                        <td><a href='EditStatus.php?id=" . $order["command_id"] . "'><?php echo $order['status']; ?> <br><i class='fa-solid fa-pen-to-square'></i></a></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
-                    echo '<tr ' . $rowClass . '>';
-                    echo '<td>' . $command['id'] . '</td>';
-                    echo '<td>' . $command['user_id'] . '</td>';
-                    echo '<td>' . $command['username'] . '</td>';
-                    echo '<td>' . $command['total_amount'] . '</td>';
-                    echo '<td>' . $command['order_date'] . '</td>';
-                    echo '<td>' . $command['delivery_date'] . '</td>';
-                    echo '<td>' . $command['status'] . '</td>';
-                    echo "<td><a href='editStatus.php'  " . $command["id"] . "><i class='fa-solid fa-pen-to-square'></i></a> </td>";
-                    echo '</tr>';
-                }
-                ?>
 
-        
 
-        </table>  
+
 </body>
-<script  src="admin.js"></script>
+<script src="admin.js"></script>
+
 </html>
