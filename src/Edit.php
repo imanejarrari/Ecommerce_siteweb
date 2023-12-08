@@ -310,7 +310,7 @@ input[type="submit"]:hover {
             </div>
             <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="Admin.php"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="user.php"><i class="fa-solid fa-user"></i>All Users </a>
                 </li>

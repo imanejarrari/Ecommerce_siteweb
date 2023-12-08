@@ -72,12 +72,20 @@ $conn->close();
     <title> Sidebar Menu </title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="Affichage.css">
+    <script>
+    function confirmLogout() {
+        var confirmLogout = confirm("Are you sure you want to log out?");
+        if (confirmLogout) {
+            window.location.href = "logout.php"; // Replace with the actual URL for the logout script
+        }
+    }
+</script>
     <style>
     section {
             display: flex;
            margin-left:220px;
            margin-right:20px;
-           margin-top:10px;
+           margin-top:30px;
             align-items: center;
             flex-wrap: wrap;
             gap:10px;
@@ -142,19 +150,21 @@ a{
 
 }
 .form{
-    margin-top:40px;
-    margin-left:250px;
+    margin-top:5px;
+    margin-left:200px;
+
 }
 .search{
-      width:1050px;
+      width:500px;
       height:40px;
-      padding-left:480px;
+      padding-left:200px;
      margin-right:60px;
+     margin-left:320px;
      display: inline-block;
      font-size:small;
-     border-style: solid ;
-    border-color:#041e42 ;
-    border-width:1px 1px 1px 1px;
+     border:1px solid #041e42;
+     border-radius:10px;
+     box-shadow: #f5f5f5;
     
     }
     .modal {
@@ -210,7 +220,7 @@ a{
             </div>
             <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="Admin.php"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="user.php"><i class="fa-solid fa-user"></i>All Users </a>
                 </li>
@@ -220,11 +230,20 @@ a{
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
-                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i>Settings </a>           </li>
+                <li class="sidebar-item" id="settings">
+    <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
+        <i class="fa-solid fa-gear"></i> Logout
+    </a>
+</li>
+
             </ul>
         </div>
     
-
+<form action="" method="GET" class="form">
+       
+       <label for="search_name"></label>
+      <input type="text" name="search_name" class="search" placeholder="Search here:" value="<?php echo $searchTerm; ?>">
+  </form>
 
         <section>
             <div class="card">
@@ -244,11 +263,7 @@ a{
                 <?php echo "Pending Orders: " . $pendingOrders . ""; ?>
             </div>
         </section>
-<form action="" method="GET" class="form">
-       
-       <label for="search_name"></label>
-      <input type="text" name="search_name" class="search" placeholder="Search:" value="<?php echo $searchTerm; ?>">
-  </form>
+
         <table border="1" class="tab">
             <thead>
                 <tr>
