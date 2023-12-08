@@ -30,11 +30,21 @@ if ($result !== false) {
     echo "Error: " . $sqlCount . "<br>" . $conn->error;
 }
 
+$searchTerm = isset($_GET['search_name']) ? $_GET['search_name'] : null;
+$allOrders = getAllOrders($conn, $searchTerm);
+
 
 // Fetch all orders
 
-function getAllOrders($conn) {
+function getAllOrders($conn, $searchTerm = null) {
     $sql = "SELECT * FROM orders";
+
+    // Add a WHERE clause for searching if a search term is provided
+    if ($searchTerm !== null) {
+        $searchTerm = $conn->real_escape_string($searchTerm);
+        $sql .= " WHERE username LIKE '%$searchTerm%' OR command_id = '$searchTerm'";
+    }
+
     $result = $conn->query($sql);
     $orders = array();
 
@@ -46,8 +56,6 @@ function getAllOrders($conn) {
 
     return $orders;
 }
-
-$allOrders = getAllOrders($conn);
 
 // Close the database connection
 $conn->close();
@@ -69,7 +77,7 @@ $conn->close();
             display: flex;
            margin-left:220px;
            margin-right:20px;
-           margin-top:30px;
+           margin-top:10px;
             align-items: center;
             flex-wrap: wrap;
             gap:10px;
@@ -133,6 +141,62 @@ a{
     color: #041e42;
 
 }
+.form{
+    margin-top:40px;
+    margin-left:250px;
+}
+.search{
+      width:1050px;
+      height:40px;
+      padding-left:480px;
+     margin-right:60px;
+     display: inline-block;
+     font-size:small;
+     border-style: solid ;
+    border-color:#041e42 ;
+    border-width:1px 1px 1px 1px;
+    
+    }
+    .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .edit-status {
+    background: none;
+    border: none;
+    color: #041e42;
+    cursor: pointer;
+}
+
     </style>
 
 </head>
@@ -163,6 +227,8 @@ a{
                 <li>
             </ul>
         </div>
+    
+
 
         <section>
             <div class="card">
@@ -182,19 +248,24 @@ a{
                 <?php echo "Pending Orders: " . $pendingOrders . ""; ?>
             </div>
         </section>
-
+<form action="" method="GET" class="form">
+       
+       <label for="search_name"></label>
+      <input type="text" name="search_name" class="search" placeholder="Search:" value="<?php echo $searchTerm; ?>">
+  </form>
         <table border="1" class="tab">
             <thead>
                 <tr>
                     <th>Order ID</th>
                     <th>Product ID</th>
+                    <th>Product image</th>
                     <th>User ID</th>
                     <th>User Name</th>
                     <th>Address</th>
                     <th>Postal Code</th>
                     <th>Phone Number</th>
                     <th>Quantity</th>
-                    <th>Total Amount</th>
+                    <th>Price</th>
                     <th>Date of Delivering</th>
                     <th>Status</th>
                 </tr>
@@ -204,23 +275,63 @@ a{
                     <tr>
                         <td><?php echo $order['command_id']; ?></td>
                         <td><?php echo $order['product_id']; ?></td>
+                        <td><img src="<?php echo $order['image_path']; ?>" alt="Product Image" style="width: 50px; height: 50px;"></td>
                         <td><?php echo $order['user_id']; ?></td>
                         <td><?php echo $order['username']; ?></td>
                         <td><?php echo $order['adresse']; ?></td>
                         <td><?php echo $order['code_postal']; ?></td>
                         <td><?php echo $order['number_phone']; ?></td>
-                        <td><?php echo $order['quantity']; ?></td>
-                        <td><?php echo $order['total_amount']; ?></td>
+                        <td><?php echo $order['quantity'] ;  ?></td>
+                        <td><?php echo $order['total_amount']; '$ ' ?></td>
                         <td><?php echo $order['date_of_delivering']; ?></td>
-                        <td><a href='EditStatus.php?id=" . $order["command_id"] . "'><?php echo $order['status']; ?> <br><i class='fa-solid fa-pen-to-square'></i></a></td>
+                        <td>
+    <button class="edit-status" data-order-id="<?php echo $order['command_id']; ?>">
+        <span><?php echo $order['status']; ?></span>
+        <br>
+        <i class='fa-solid fa-pen-to-square'></i>
+    </button>
+</td>
+
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <div id="editStatusModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <form action="update_status.php" method="POST">
+                    <label for="newStatus">New Status:</label>
+                    <input type="text" name="newStatus" id="newStatus" required>
+                    <input type="hidden" name="orderId" id="orderId">
+                    <button type="submit">Update Status</button>
+                </form>
+            </div>
+        </div>
 
+        <script>
+            var modal = document.getElementById("editStatusModal");
+            var editButtons = document.getElementsByClassName("edit-status");
 
+            Array.from(editButtons).forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var orderId = button.getAttribute("data-order-id");
+                    document.getElementById("orderId").value = orderId;
+                    modal.style.display = "block";
+                });
+            });
 
+            function closeModal() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            };
+        </script>
+    </div>
 
 </body>
 <script src="admin.js"></script>
