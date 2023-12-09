@@ -97,10 +97,9 @@ $conn->close();
                 <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
                 <li class="sidebar-item" id="settings">
-    <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
-        <i class="fa-solid fa-gear"></i> Logout
-    </a>
-</li>
+                 <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
+                     <i class="fa-solid fa-gear"></i> Logout</a>
+               </li>
             </ul>
         </div>
     
