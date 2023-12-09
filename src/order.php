@@ -180,12 +180,14 @@ a{
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background-color:#f5f5f5;
             margin: 15% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 30%;
+            height:130px;
         }
+
 
         .close {
             color: #aaa;
@@ -205,6 +207,24 @@ a{
     border: none;
     color: #041e42;
     cursor: pointer;
+}
+#btn{
+    background-color: #041e42;
+    color: white;
+    border:0.5px solid #041e42;
+    border-radius:5px;
+    width:120px;
+    height:30px;
+    margin-left:130px;
+    margin-top:30px;
+}
+#newStatus{
+    width:230px;
+    height:30px;
+    border:1px solid #041e42;
+    border-radius:5px;
+    padding-left:50px;
+
 }
 
     </style>
@@ -307,19 +327,19 @@ a{
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-    <div id="editStatusModal" class="modal">
+
+        <div id="editStatusModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <form action="update_status.php" method="POST">
                     <label for="newStatus">New Status:</label>
-                    <input type="text" name="newStatus" id="newStatus" required>
+                    <input type="text" name="newStatus" id="newStatus" placeholder="Enter the new Status" required>
                     <input type="hidden" name="orderId" id="orderId">
-                    <button type="submit">Update Status</button>
+                    <button type="submit" id="btn">Update Status</button>
                 </form>
             </div>
         </div>
-
+        
         <script>
             var modal = document.getElementById("editStatusModal");
             var editButtons = document.getElementsByClassName("edit-status");
@@ -343,6 +363,7 @@ a{
             };
         </script>
     </div>
+   
 
 </body>
 <script src="admin.js"></script>

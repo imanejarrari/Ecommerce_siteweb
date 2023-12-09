@@ -1,31 +1,33 @@
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get the new status and order ID from the form submission
-        $newStatus = $_POST["newStatus"];
-        $orderId = $_POST["orderId"];
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        
-        $servername = "127.0.0.1";
-        $username = "root";
-        $password = "";
-        $dbname = "ecommerce";
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $newStatus = $_POST["newStatus"];
+    $orderId = $_POST["orderId"];
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+    // Sanitize and validate input as needed
+    // ...
 
-        // Assuming your orders table has a column named 'status'
-        $sqlUpdate = "UPDATE orders SET status='$newStatus' WHERE command_id='$orderId'";
+    // Update the status in the database
+    $sqlUpdate = "UPDATE orders SET status = '$newStatus' WHERE command_id = $orderId";
 
-        if ($conn->query($sqlUpdate) === TRUE) {
-            echo "Status updated successfully";
-        } else {
-            echo "Error updating status: " . $conn->error;
-        }
-
-        $conn->close();
+    if ($conn->query($sqlUpdate) === TRUE) {
+        header("location:order.php");
+    } else {
+        echo "Error updating status: " . $conn->error;
     }
-    ?>
+}
+
+$conn->close();
+?>
