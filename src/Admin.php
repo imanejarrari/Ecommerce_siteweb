@@ -33,7 +33,7 @@ $totalPrice = $resultTotalPrice->fetch_assoc()["total_price"];
 
 
 //latest users
-$sqlLatestUsers = "SELECT * FROM users ORDER BY registration_date DESC LIMIT 10";
+$sqlLatestUsers = "SELECT * FROM users where IsAdmin!=1 ORDER BY registration_date DESC LIMIT 10";
 $resultLatestUsers = $conn->query($sqlLatestUsers);
 
 //info about the latest orders
@@ -99,41 +99,119 @@ $conn->close();
             margin:10px;
         }
         .big{
-            margin-left:210px;
+            margin-left:200px;
             margin-top:100px;
         }
         .big2{
-            margin-left:600px;
+            margin-left:20px;
             position: absolute;
-            bottom:70px;
+            bottom:40px;
+            box-shadow: 0 4px 6px rgba(1, 1, 0, 1);
+
             
         }
-        .big1{
-           
-            width:400px;    
+        .big1{ 
+            position: absolute;
+            top:210px;
+            margin-left:880px;
+            box-shadow: 0 4px 6px rgba(1, 1, 0, 1);
+            width:250px;
+            
         }
-        .tab{
+.tab{    
     border-collapse: collapse;
-    width: 400px;
-    margin-left:40px;
+    width: 800px;
+    margin-left:20px;
+    height: auto;
 }
 .tab th{
-    border: 1px 1px 1px 1px solid white;
+border-bottom:1px solid #E8E2E2;
   padding-left:10px;
   text-align: center;
   height:50px;
-  color: white;
-  background-color:#041e42 ;
+  color: #041e42;
   
 }
 .tab td{
-    border: 0.5px solid  #041e42;
+    border-bottom:0.5px solid #E8E2E2;
     padding-left:10px;
     text-align: center;
     color: #041e42;
+    height:50px;
 
   } 
+  #icon1{
+   margin-left:60px ;
+  }
+  #icon2{
+    margin-left:120px;
+  }
+  #icon3{
+    margin-left:120px;
+  }
+  #icon4{
+    margin-left:120px;
+  }
+  .Lo{
+    padding-left:10px;
+  }
+  .status {
+      padding: 4px 8px;
+      font-size: 12px;
+      text-align: center;
+      color: #041e42;
+      border-radius: 10px;
 
+   }
+   .pending {
+      background-color: #FFFFCC;
+      
+   }
+
+   .completed {
+      background-color: greenyellow;
+   }
+
+   .cancelled {
+      background-color: #FF9999;
+   }
+   .divtab{
+    margin-bottom:60px;
+   }
+   .divtab>h3{
+    margin-top:20px;
+    margin-left:30px;
+    color: #041e42;
+    font-family: 'Lucida Sans';
+   }
+   .divtab>a{
+    text-decoration: none;
+    margin-left:700px;
+    position: absolute;
+    top:20px;
+    border:1px solid  #f5f5f5;
+    border-radius:25px;
+    color:white;
+    background-color:#041e42; 
+    padding:5px ;
+   }
+   .tab2{
+       margin-bottom:95px;
+       border-collapse: collapse;
+   }
+   .tab2 td{
+    padding-left:10px ;
+    padding-right:10px;
+   }
+   .divtab2{
+    margin-bottom:-30px;
+   }
+   .divtab2>h3{
+    margin-top:20px;
+    margin-left:20px;
+    color: #041e42;
+    font-family: 'Lucida Sans';
+   }
 </style>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Handlee:wght@400&display=swap');
@@ -159,7 +237,7 @@ $conn->close();
                 </li>
                 <li class="sidebar-item" id="settings">
     <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
-        <i class="fa-solid fa-gear"></i> Logout
+    <i class="fa-solid fa-right-from-bracket"></i>Logout
     </a>
 </li>
                 
@@ -171,34 +249,42 @@ $conn->close();
 
         <section>
             <div class="card">
-               <h3><?php echo "" . $totalPrice . "$"; ?></h3> 
+               <h3><?php echo "" . $totalPrice . "        $" ; ?> <i id="icon1" class="fa-solid fa-coins"></i></h3>
                 <h4>Earning</h4>
             </div>
             <div class="card">
-               <h3><?php echo "" . $orderCount. ""; ?> </h3> 
+               <h3><?php echo "" . $orderCount. ""; ?>  <i id="icon2" class="fa-solid fa-sort"></i> </h3> 
                 <h4>Orders</h4>
             </div>
             <div class="card">
-              <h3><?php echo " " . $userCount . ""; ?></h3>  
-                <h4>Clients</h4>
+              <h3><?php echo " " . $userCount . ""; ?> <i id="icon3" class="fa-solid fa-user"></i></h3>  
+                <h4>Customers</h4>
             </div>
             <div class="card">
                 
-               <h3><?php echo " " . $completedOrderCount . ""; ?></h3> 
+               <h3><?php echo " " . $completedOrderCount . ""; ?> <i id="icon4" class="fa-solid fa-cart-arrow-down"></i></h3> 
                 <h4>Sales</h4>
             </div>
         </section>
         <div class="big">
-    <div class="big1">
-        <?php 
+        <div class="big1">
+            <table class="tab2">
+            <div class="divtab2">
+            <h3>Latest Customers</h3>
+            </div>
+                <tr>
+                 <th></th>
+                 <th></th>
+                </tr>
+                <?php 
+
         if ($resultLatestUsers->num_rows > 0) {
-            echo "<h2>Latest clients:</h2>";
 
             while ($row = $resultLatestUsers->fetch_assoc()){
                 echo "<tr>";
-                echo "<td>" . $row["profile_picture"] . "</td> <br>"; 
+                echo "<td><img src='" . $row["profile_picture"] . "' alt='" . $row["username"] . "' width='40' height='40' border-radius='50%'></td>";
+
                 echo "<td>" . $row["username"] . "</td> <br>"; 
-                echo "<td>" . $row["email"] . "</td> <br> "; 
                 
                 echo "</tr>";
             
@@ -208,35 +294,47 @@ $conn->close();
             echo "No users found.";
         }
         ?>
+            </table>
+        
     </div>
+  
 
     <div class="big2">
 
-     <table border="1" class="tab">
-     <tr>
-         <th>Product Image</th>
-         <th>Client's name</th>
-         <th>Quantity</th>
-         <th>Price</th>
-         <th>Status</th>
-     </tr>
-     <?php
-     // Affichez chaque produit dans le tableau
-     if ($resultLatestOrders->num_rows > 0) {
-        echo "<h2>Latest orders:</h2>";
-     while ( $row = $resultLatestOrders->fetch_assoc()) {
-         echo "<tr>";
-         echo "<td><img src='" . $row["image_path"] . "' alt='" . $row["command_id"] . "' width='50' height='50'></td>";
-         echo "<td>" . $row["username"] . "</td>";
-         echo "<td>" . $row["quantity"] . "</td>";
-         echo "<td>" . $row["total_amount"] . "</td>";
-         echo "<td>" . $row["status"] . "</td>";
+    <table class="tab">
+     <div class="divtab">
+        <h3>Latest Orders</h3>
+        <a href="order.php">View All</a>
+     </div>
+    <tr>
+        <th>Product Image</th>
+        <th>Client's name</th>
+        <th>Price</th>
+        <th>Status</th>
+    </tr>
+    <?php
+    // Affichez chaque produit dans le tableau
+    if ($resultLatestOrders->num_rows > 0) {
+        while ( $row = $resultLatestOrders->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td><img src='" . $row["image_path"] . "' alt='" . $row["command_id"] . "' width='50' height='50'></td>";
+            echo "<td>" . $row["username"] . "</td>";
+            echo "<td>" . $row["total_amount"] . "</td>";
+            
+            // Ajoutez la classe CSS correspondante en fonction du statut
+            $statusClass = strtolower($row["status"]);
+           echo "<td >" .
+     "<a class='status $statusClass'>" . $row["status"] . "</a>" .
+     "</td>";
+ 
 
-         echo "</tr>";
-     }
+            echo "</tr>";
+        }
     }
-     ?>
- </table>
+    ?>
+</table>
+
+
    
 
     </div>

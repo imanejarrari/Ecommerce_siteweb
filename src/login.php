@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($user["isAdmin"]) {
                 header("Location: Admin.php");
             } else {
-                header("Location: index.php");
+                header("Location: homeafter.php");
             }
             exit();
         } else {

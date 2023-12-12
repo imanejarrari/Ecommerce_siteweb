@@ -76,7 +76,7 @@
             </div>
             <li class="menu"><i class="fa-sharp fa-solid fa-circle-chevron-down"></i></li>
             <ul>
-                <li class="sidebar-item"><a class="sidebar-link" href="#"><i class="fa-solid fa-house"></i> Dashbord </a>
+                <li class="sidebar-item"><a class="sidebar-link" href="Admin.php"><i class="fa-solid fa-house"></i> Dashbord </a>
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="user.php"><i class="fa-solid fa-user"></i>All Users </a>
                 </li>
@@ -100,6 +100,7 @@
     <table border="1" class="tab">
         <tr>
             <th>id</th>
+            <th>Profile</th>
             <th>Name</th>
             <th>E-mail</th>
             <th>Registration date</th>
@@ -109,6 +110,7 @@
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $row["id"] . "</td>";
+            echo "<td><img src='" . $row["profile_picture"] . "' alt='" . $row["username"] . "' width='40' height='40' border-radius='50%'></td>";
             echo "<td>" . $row["username"] . "</td>";
             echo "<td>" . $row["email"] . "</td>";
             echo "<td>" . $row["registration_date"] . "</td>";
