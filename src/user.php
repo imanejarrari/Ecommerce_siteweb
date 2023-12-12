@@ -56,6 +56,14 @@
 
     </style>
      <script>
+    function confirmLogout() {
+        var confirmLogout = confirm("Are you sure you want to log out?");
+        if (confirmLogout) {
+            window.location.href = "logout.php"; // Replace with the actual URL for the logout script
+        }
+    }
+</script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const searchInput = document.querySelector(".search");
 
@@ -86,7 +94,12 @@
                 </li>
                 <li class="sidebar-item"><a class="sidebar-link" href="order.php"><i class="fa-solid fa-bag-shopping" style="color: #ffffff;"></i>All Orders </a>
                 </li>
-                <li class="sidebar-item" id="settings"><a id="settings" class="sidebar-link" href="#"><i class="fa-solid fa-gear"></i>Settings </a>           </li>
+                <li class="sidebar-item" id="settings">
+    <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
+    <i class="fa-solid fa-right-from-bracket"></i>Logout
+    </a>
+</li>
+              </li>
             </ul>
         </div>
     

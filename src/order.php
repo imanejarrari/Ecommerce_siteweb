@@ -252,7 +252,7 @@ a{
                 </li>
                 <li class="sidebar-item" id="settings">
     <a id="settings" class="sidebar-link" href="#" onclick="confirmLogout()">
-        <i class="fa-solid fa-gear"></i> Logout
+    <i class="fa-solid fa-right-from-bracket"></i>Logout
     </a>
 </li>
 

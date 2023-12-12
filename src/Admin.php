@@ -40,6 +40,22 @@ $resultLatestUsers = $conn->query($sqlLatestUsers);
 $sqlLatestOrders = "SELECT * FROM orders ORDER BY date_of_delivering DESC LIMIT 10";
 $resultLatestOrders = $conn->query($sqlLatestOrders);
 
+// Count products by category
+$sqlProductsByCategory = "SELECT category, COUNT(*) AS product_count FROM products GROUP BY category";
+$resultProductsByCategory = $conn->query($sqlProductsByCategory);
+
+$categoriesProducts = [];
+$productCountsByCategory = [];
+
+while ($row = $resultProductsByCategory->fetch_assoc()) {
+    $categoriesProducts[] = $row['category'];
+    $productCountsByCategory[] = $row['product_count'];
+}
+
+// Convertissez les données en format JSON pour que JavaScript puisse les utiliser
+$categoriesProductsJson = json_encode($categoriesProducts);
+$productCountsByCategoryJson = json_encode($productCountsByCategory);
+
 
 
 
@@ -59,6 +75,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
         <link rel="stylesheet" href="admin.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
     function confirmLogout() {
         var confirmLogout = confirm("Are you sure you want to log out?");
@@ -86,7 +103,13 @@ $conn->close();
             border-radius: 5px;
             width: 200px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; 
         }
+        .card:hover {
+            background-color: #f5f5f5; /* Change the background color on hover */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
+}
+
         h3{
             margin-bottom: 10px;
             color: #041e42;
@@ -212,6 +235,32 @@ border-bottom:1px solid #E8E2E2;
     color: #041e42;
     font-family: 'Lucida Sans';
    }
+   #big3{
+    margin-left:220px;
+    margin-top:500px;
+    width:1100px;
+    height:250px;
+    text-align: center; 
+    margin-bottom:30px;
+}
+#myChart {
+    max-width:70%; /* Assurez-vous que le diagramme ne dépasse pas de son conteneur */
+    margin-left:200px;
+    
+    display: block; /* Évite un léger espace sous le diagramme */
+}
+
+#big3 h4 {
+    color: #041e42;
+    margin-top: 10px;
+}
+#big3 h3{
+    
+    position: absolute;
+    left:250px;
+    font-family: 'Lucida Sans';
+}
+
 </style>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Handlee:wght@400&display=swap');
@@ -337,18 +386,56 @@ border-bottom:1px solid #E8E2E2;
 
    
 
-    </div>
+ </div>
+
+</div>
+<div id="big3">
+     <h3>STOCK LEVEL</h3>
+        <canvas id="myChart"></canvas>
+
+</div>
 </div>
 
+        
     
-
-
             </div>
 
-        </div>
-
-
+         <script>
+        // Utilisez les données PHP dans le script JavaScript
+        var categories = <?php echo $categoriesProductsJson; ?>;
+        var productCounts = <?php echo $productCountsByCategoryJson; ?>;
     
+        // Configuration du diagramme
+        var chartData = {
+            labels: categories,
+            datasets: [{
+                label: "Number of products by category",
+                data: productCounts,
+                backgroundColor: 'rgba(75, 192, 192, 1)',
+                borderColor: 'rgba(75, 192, 192, 1.5)',
+                borderWidth: 1
+            }]
+        };
+    
+        var chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        };
+    
+        // Création du diagramme
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: chartOptions
+        });
+    </script>
+
 </body>
 <script src="admin.js"></script>
 </html> 
