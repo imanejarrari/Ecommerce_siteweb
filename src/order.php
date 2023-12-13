@@ -189,6 +189,7 @@ a{
         }
 
 
+        
         .close {
             color: #aaa;
             float: right;

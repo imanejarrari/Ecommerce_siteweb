@@ -1,10 +1,8 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
+session_start();
+require("config.php");
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$user_id = isset($_SESSION["user_name"]) ? $_SESSION["user_name"] : null;
 
 $sql = "SELECT image_path FROM products WHERE id IN (44, 51,50,53,14,13,19,22)";
 $result = $conn->query($sql);
