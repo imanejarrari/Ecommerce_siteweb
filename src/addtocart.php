@@ -149,6 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
   </section>
 
   <section id="cart" class="section-p1">
+    <form action="" method="post">
+    
     <table width=100%>
       <thead>
         <tr id="hed">
@@ -229,11 +231,20 @@ if ($stmt) {
     mysqli_stmt_close($stmt);
 }
 
-// ...
+       
 ?>
+    
+    
 
-    <button  type="submit" class="check" name="checkout">Chechout</button>
-  </div>
+</tbody>
+</table>
+
+
+<p class='total-amount' id='total'>Total amount: <?php echo "$totalCartPrice $"; ?></p>
+
+<button  type="submit" class="check" name="checkout">Chechout</button>
+</form>
+
 </body>
 
 </html>

@@ -293,17 +293,21 @@ font-size: 18px;
 #fil{
   
   color: #fff;
-  border: 2px solid #041e42;
+  border:1px solid #041e42;
   background-color: #041e42;
-  padding:15px 30px;
+  padding-left:10px;
   
-    border-radius: 20px;
+width:100px;
+  height:30px;
+    border-radius:20px;
     margin-left: 200px;
-    margin-bottom: 0px;
+    position: absolute;
+    top: 130px;
+    margin-top:5px;
+    margin-bottom:2px;
     outline: none;
     font-weight: 500;
     font-size: 15px;
-    margin-top: -100px;
     cursor: pointer;
   
   

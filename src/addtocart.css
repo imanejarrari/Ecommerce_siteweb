@@ -170,12 +170,12 @@ font-size: 18px;
 
     }
   table{
-      margin-left: 20px;
+      margin-left:15px;
       margin-top: 150px;
   }
   
        table {
-          width: 100%;
+          width:97%;
           border-collapse: collapse;
           table-layout: fixed;
           white-space: nowrap;
@@ -234,7 +234,8 @@ font-size: 18px;
           font-size: 13px;
       }
       #hed td{ background-color: #041e42;
-      color: white;}
+      color: white;
+    }
      #total{
       margin-top: 50px;
       border: 2px solid #041e42;
@@ -258,18 +259,22 @@ font-size: 18px;
       }
       .check{
         
-      color: #fff;
-      border: 2px solid #041e42;
-      background-color: #041e42;
+      color:white;
+      border: 2px solid #45D62E;
+      background-color: #45D62E;
       padding:20px;
         border-radius: 50px;
-        margin-left: 300px;
-        margin-bottom: 0px;
+        margin-left:500px;
         outline: none;
         font-weight: bold;
         font-size: 15px;
-        margin-bottom: -10px;
+        position: absolute;
+        top:130px;
+        right:50px;
+        width:200px;
         cursor: pointer;
+
+        
         
 
       }
