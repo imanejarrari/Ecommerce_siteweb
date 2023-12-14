@@ -33,11 +33,11 @@ $totalPrice = $resultTotalPrice->fetch_assoc()["total_price"];
 
 
 //latest users
-$sqlLatestUsers = "SELECT * FROM users where IsAdmin!=1 ORDER BY registration_date DESC LIMIT 10";
+$sqlLatestUsers = "SELECT * FROM users where IsAdmin!=1 ORDER BY registration_date DESC LIMIT 4";
 $resultLatestUsers = $conn->query($sqlLatestUsers);
 
 //info about the latest orders
-$sqlLatestOrders = "SELECT * FROM orders ORDER BY date_of_delivering DESC LIMIT 10";
+$sqlLatestOrders = "SELECT * FROM orders ORDER BY date_of_delivering DESC LIMIT 4";
 $resultLatestOrders = $conn->query($sqlLatestOrders);
 
 // Count products by category
