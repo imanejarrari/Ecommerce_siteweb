@@ -24,9 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     } else {
         die("Error in the prepared statement.");
     }
-} else {
+    
+
+  }else {
     die("Product ID not provided.");
-}
+  
+  
+       }
+
 
 
 
@@ -351,7 +356,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
   <section id="header">
     <div class="head">
       <ul class="navbar">
-        <h2 id="logo"><a href="index.php">EVARA</a></h2>
+        <h2 id="logo"><a href="homeafter.php">EVARA</a></h2>
         <li>
           <form action="" method="GET" class="form">
             <label for="search_name"></label>

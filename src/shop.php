@@ -469,7 +469,7 @@ footer .follow i:hover{
 
     <div class="head">
       <ul class="navbar">
-        <h2 id="logo"><a href="index.php">EVARA</a></h2>
+        <h2 id="logo"><a href="homeafter.php">EVARA</a></h2>
         <li>
         <form action="chercher.php" method="GET" class="form">
   <div class="search-container">

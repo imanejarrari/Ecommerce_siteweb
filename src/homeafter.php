@@ -63,7 +63,7 @@ if ($result->num_rows > 0) {
 
     <div class="head">
       <ul class="navbar">
-        <h2 id="logo"><a href="index.php">EVARA</a></h2>
+        <h2 id="logo"><a href="homeafter.php">EVARA</a></h2>
 
 
 

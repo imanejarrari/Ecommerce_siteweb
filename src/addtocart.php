@@ -3,7 +3,6 @@ session_start();
 
 require("config.php");
 
-$user_id = null; 
 $totalCartPrice = 0;
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
     $product_id = $_POST["product_id"];
@@ -75,13 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
     } else {
         echo 'error in the prepared statement';
    }
-
-}
+ header("location:shop.php");
+  }
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -123,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
 
     <div class="head">
       <ul class="navbar">
-        <h2 id="logo"><a href="index.php">EVARA</a></h2>
+        <h2 id="logo"><a href="homeafter.php">EVARA</a></h2>
 
         <li>
           <div class="search-box">
@@ -165,44 +162,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
       </thead>
       <tbody>
         
-        <?php
-        // Fetch data from the "cart" table, including the product's image path and calculate total price
-$query = "SELECT c.*, p.image_path, (c.quantity * p.price) AS total_price ,p.name
-FROM cart c
-JOIN products p ON c.id_product = p.id
-WHERE c.id_user = '$user_id'";
+      <?php
+// ...
 
-$result = mysqli_query($conn, $query);
+$user_id = null; // Initialize user ID
 
-          // Check if the cart is not empty
-          if ($result && mysqli_num_rows($result) > 0)  {
-            $totalCartPrice = 0;
+// Check if the user is logged in
+if (isset($_SESSION["user_name"])) {
+    // Fetch the user ID using the username from the session
+    $username = $_SESSION["user_name"];
 
-             while ($row = mysqli_fetch_assoc($result)) {
-        ?>
-              <tr>
+    $selectUserIdQuery = "SELECT id FROM users WHERE username = ?";
+    $stmtUserId = mysqli_prepare($conn, $selectUserIdQuery);
+
+    if ($stmtUserId) {
+        mysqli_stmt_bind_param($stmtUserId, "s", $username);
+        mysqli_stmt_execute($stmtUserId);
+
+        $resultUserId = mysqli_stmt_get_result($stmtUserId);
+        $rowUserId = mysqli_fetch_assoc($resultUserId);
+
+        if ($rowUserId) {
+            $user_id = $rowUserId["id"];
+        }
+
+        mysqli_stmt_close($stmtUserId);
+    }
+}
+
+// Fetch data from the "cart" table, including the product's image path and calculate the total price
+$query = "SELECT c.*, p.image_path, (c.quantity * p.price) AS total_price, p.name
+          FROM cart c
+          JOIN products p ON c.id_product = p.id
+          WHERE c.id_user = ?";
+
+$stmt = mysqli_prepare($conn, $query);
+
+if ($stmt) {
+    mysqli_stmt_bind_param($stmt, "i", $user_id);
+    mysqli_stmt_execute($stmt);
+
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Check if the cart is not empty
+    if ($result && mysqli_num_rows($result) > 0) {
+        $totalCartPrice = 0;
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Display cart items
+            ?>
+            <tr>
                 <td><img src='<?php echo $row['image_path']; ?>' alt='<?php echo $row['name']; ?>' id='imag'></td>
-                <td>
-                  <h3><?php echo $row['name']; ?></h3>
-                </td>
+                <td><h3><?php echo $row['name']; ?></h3></td>
                 <td><?php echo $row['price'] ; ?>$</td>
                 <td><?php echo $row['quantity'] ; ?></td>
                 <td><?php echo $row['total_price']; ?>$</td>
                 <td><a href='removecart.php?id=<?php echo $row['id_product']; ?>'>Remove</a></td>
-              </tr>
-        <?php
-        // Accumulate total price for each product
-        $totalCartPrice += $row['total_price'];
-            }
-            // Display the total cart price
-           // echo "<p class='total-amount' id='total'>Total Cart Price: ' . $totalCartPrice . ' $'</p>";
-          }      
-        ?>
-      </tbody>
-    </table>
-  </section>
-  <?php echo "<p class='total-amount' id='total'>Total amount:$totalCartPrice$</p>"; ?>
-  <div>
+            </tr>
+            <?php
+
+            // Accumulate the total price for each product
+            $totalCartPrice += $row['total_price'];
+        }
+    }
+
+    mysqli_stmt_close($stmt);
+}
+
+// ...
+?>
+
     <button  type="submit" class="check" name="checkout">Chechout</button>
   </div>
 </body>
