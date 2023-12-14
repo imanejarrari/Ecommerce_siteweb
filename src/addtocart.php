@@ -1,7 +1,11 @@
 <?php
 session_start();
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "ecommerce";
 
-require("config.php");
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 $totalCartPrice = 0;
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
@@ -149,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add_to_cart"])) {
   </section>
 
   <section id="cart" class="section-p1">
-    <form action="" method="post">
+    <form action="checkout.php" method="post">
     
     <table width=100%>
       <thead>
@@ -233,6 +237,8 @@ if ($stmt) {
 
        
 ?>
+
+
     
     
 
@@ -241,6 +247,9 @@ if ($stmt) {
 
 
 <p class='total-amount' id='total'>Total amount: <?php echo "$totalCartPrice $"; ?></p>
+<input type="hidden" name="quantity" value="<?php echo $quantity; ?>">
+    <input type="hidden" name="total_cart_price" value="<?php echo $totalCartPrice; ?>">
+
 
 <button  type="submit" class="check" name="checkout">Chechout</button>
 </form>

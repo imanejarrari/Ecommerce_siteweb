@@ -124,17 +124,19 @@ $conn->close();
         .big{
             margin-left:200px;
             margin-top:100px;
+
         }
         .big2{
             margin-left:20px;
-            position: absolute;
+            position:absolute;
             bottom:40px;
             box-shadow: 0 4px 6px rgba(1, 1, 0, 1);
+
 
             
         }
         .big1{ 
-            position: absolute;
+            position:absolute;
             top:210px;
             margin-left:880px;
             box-shadow: 0 4px 6px rgba(1, 1, 0, 1);
@@ -165,15 +167,19 @@ border-bottom:1px solid #E8E2E2;
   } 
   #icon1{
    margin-left:60px ;
+   position: fixed;
   }
   #icon2{
     margin-left:120px;
+    position: fixed;
   }
   #icon3{
     margin-left:120px;
+    position: fixed;
   }
   #icon4{
     margin-left:120px;
+    position: fixed;
   }
   .Lo{
     padding-left:10px;
@@ -242,6 +248,7 @@ border-bottom:1px solid #E8E2E2;
     height:250px;
     text-align: center; 
     margin-bottom:30px;
+    box-shadow: 1px 4px 6px rgba(1, 1, 0, 1);
 }
 #myChart {
     max-width:70%; /* Assurez-vous que le diagramme ne dépasse pas de son conteneur */
@@ -356,8 +363,8 @@ border-bottom:1px solid #E8E2E2;
         <a href="order.php">View All</a>
      </div>
     <tr>
-        <th>Product Image</th>
         <th>Client's name</th>
+        <th>Quantity</th>
         <th>Price</th>
         <th>Status</th>
     </tr>
@@ -366,8 +373,8 @@ border-bottom:1px solid #E8E2E2;
     if ($resultLatestOrders->num_rows > 0) {
         while ( $row = $resultLatestOrders->fetch_assoc()) {
             echo "<tr>";
-            echo "<td><img src='" . $row["image_path"] . "' alt='" . $row["command_id"] . "' width='50' height='50'></td>";
             echo "<td>" . $row["username"] . "</td>";
+            echo "<td>" . $row["quantity"] . "</td>";
             echo "<td>" . $row["total_amount"] . "</td>";
             
             // Ajoutez la classe CSS correspondante en fonction du statut

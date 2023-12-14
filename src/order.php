@@ -289,7 +289,6 @@ a{
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Product </th>
                     <th>User Name</th>
                     <th>Address</th>
                     <th>Postal Code</th>
@@ -304,7 +303,6 @@ a{
                 <?php foreach ($allOrders as $order) : ?>
                     <tr>
                         <td><?php echo $order['command_id']; ?></td>
-                        <td><img src="<?php echo $order['image_path']; ?>" alt="Product Image" style="width: 50px; height: 50px;"></td>
                         <td><?php echo $order['username']; ?></td>
                         <td><?php echo $order['adresse']; ?></td>
                         <td><?php echo $order['code_postal']; ?></td>
@@ -314,7 +312,8 @@ a{
                         <td><?php echo $order['date_of_delivering']; ?></td>
                         <td>
     <button class="edit-status" data-order-id="<?php echo $order['command_id']; ?>">
-        <span><?php echo $order['status']; ?></span>
+      
+    <span><?php echo $order['status']; ?></span>
         <br>
         <i class='fa-solid fa-pen-to-square'></i>
     </button>
