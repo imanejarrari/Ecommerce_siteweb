@@ -157,12 +157,14 @@ if (isset($_SESSION['user_name']) && !empty($_SESSION['user_name'])) {
   font-family: "Spartan", sans-serif;
 }
 
-#logo a{
+#logo  a{
 text-decoration: none;
 color: #ffff;
 font-family: "Handlee",sans-serif;
 margin-left: 50px;
 margin-right: 100px;
+position: relative;
+bottom:30px;
 
 }
 
@@ -357,10 +359,44 @@ h2{
             margin-top: 10px;
             margin-bottom: 20px;
         }
+
+       
     </style>
 </head>
 
 <body>
+
+<section id="header">
+
+    <div class="head">
+      <ul class="navbar">
+        <h2 id="logo"><a href="index.php" id="evara">EVARA</a></h2>
+        <li>
+          <div class="search-box">
+            <div class="row">
+              <input type="text" id="input-box" placeholder="search anything" autocomplete="off">
+              <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="result-box">
+
+            </div>
+          </div>
+        </li>
+
+        <li><a href="shop.php">Shop</a></li>
+        <li><a href="about.html">About us</a></li>
+        <li><a href="contact.html">contact us</a></li>
+        <li><a href="cart.php"><i class="fas fa-shopping-bag" style="color: white;"></i></a></li>
+        <li><a href="profile.php"><i class="fas fa-user" style="color: #ffffff;"></i></a>
+          <ul class="dropdown">
+            <li><a href="login.php">log in</a></li>
+            <li><a href="UserRegister.php">sign up</a></li>
+          </ul> 
+        </li>
+    </ul>
+    </div>
+    
+    </section>
     <div>
         <h2>Checkout</h2>
         <form method="post" action="">
